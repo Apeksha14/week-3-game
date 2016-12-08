@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>HANGMAN</title>
+	<link rel="icon" type="text/image" href="assets/images/matrix.png">
+	<!-- Include Bootstrap CSS -->
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Include Style CSS -->
+
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	
+	<!-- Include Matrix theme CSS -->
+
+	<link rel="stylesheet" type="text/css" href="assets/css/matrix.css">
+
+	<!-- Include Matrix theme Audio -->
+
+	<audio src="TheMatrix.mp3" type="audio/mpeg" id="myaudio" loop="loop"></audio>
+
+</head>
+<body>
+
+<!-- Background Div -->
+
+<div id="background"></div>
+
+<!-- Mid-ground Div -->
+
+<div id="midground"></div>
+
+<!-- Foreground Div : Contains the main html content -->
+
+<div id="foreground">
+
+	<!-- Open header div that displays the title HANGMAN -->
+
+	<div id="header">
+
+		<img src="assets/images/matrixbg2.png">
+	
+	</div>
+<div class="container">
+
+		<!-- Main row div open -->
+
+		<div class="row">
+
+			<!-- Column div to display stickman figure open -->
+
+			<div class="col-md-5" id="stickmancol">
+				
+				<!-- Canvas for stickman figure -->
+
+				<canvas id="stickman"></canvas>
+			
+			</div> <!-- Column div to display stickman figure close-->
+
+			<!-- Column div to display main content of the game like 
+			 	 wins,current word,Number of Guesses Left,Letters already Guessed open -->
+
+			<div class="col-md-offset-1 col-md-5" id="game">
+				
+				<div class="row">
+					
+					<div class="col-md-12">
+						
+						Wins<br><span id="wins"></span>
+					
+					</div>
+				
+				</div>
+			
+				<div class="row">
+
+					<div class="col-md-12">
+						
+						Current Word<br>
+						<span id="currentword"></span>
+					
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="col-md-12">
+
+						Number of Guesses Left<br> <span id="guessesleft"></span>
+
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="col-md-12">
+
+						Letters already Guessed<br> <span id="letters"></span>
+					
+					</div>
+				
+				</div>
+			
+			</div> <!-- Column to display main content closes -->
+		
+		</div> <!-- Main row div closes-->
+	
+	</div> <!-- Main container div closes -->
+
+	<!-- Include jQuery --> 
+
+	 <script src="https://code.jquery.com/jquery-2.2.3.js" integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4=" crossorigin="anonymous"></script>
+
+	 <script src="assets/javascript/jquery-1.3.2.min.js" type="text/javascript"></script>
+
+	 <!-- Include game.js -->
+
+	<script src="assets/javascript/game.js" type="text/javascript"></script>
+		
+	<!-- Include Matrix Background theme JS-->
+
+	<script src="assets/javascript/jquery.backgroundPosition.js" type="text/javascript"></script>
+	
+	<!-- Include Matrix background theme JS -->
+
+	<script src="assets/javascript/matrix2.js" type="text/javascript"></script>
+
+	<!-- Script for background matrix animation -->
+
+	<script type="text/javascript">
+	
+	$(document).ready(function(){
+
+		$('#midground').css({backgroundPosition: '0px 0px'});
+		$('#foreground').css({backgroundPosition: '0px 0px'});
+		$('#background').css({backgroundPosition: '0px 0px'});
+
+		$('#midground').animate({
+			backgroundPosition:"(-10000px -2000px)"
+		}, 240000, 'linear');
+
+		$('#foreground').animate({
+			backgroundPosition:"(-10000px -2000px)"
+		}, 120000, 'linear');
+
+		$('#background').animate({
+			backgroundPosition:"(-10000px -2000px)"
+		}, 480000, 'linear');
+
+	});
+
+	</script>	
+
+</body>
+</html>
