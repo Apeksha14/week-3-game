@@ -2,9 +2,10 @@
 <html>
 <head>
 
-	<title>HANGMAN</title>
+	<title>HANGMAN-THE MATRIX</title>
 	<link rel="icon" type="text/image" href="assets/images/matrix.png">
 	<!-- Include Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -18,17 +19,20 @@
 
 	<!-- Include Matrix theme Audio -->
 
-	<audio src="TheMatrix.mp3" type="audio/mpeg" id="myaudio" loop="loop"></audio>
+	<audio src="assets/theme/typing.mp3" type="audio/mpeg" id="myaudio1"></audio>
+
+	<audio src="assets/theme/maintheme.mp3" type="audio/mpeg" id="myaudio"></audio>
+
+	<audio src="assets/theme/youwin.mp3" type="audio/mpeg" id="winaudio"></audio>
+
+	<audio src="assets/theme/keyboardclick.mp3" type="audio/mpeg" id="keypress"></audio>
+
+	
 
 </head>
 <body>
 
-<!-- Background Div -->
-
 <div id="background"></div>
-
-<!-- Mid-ground Div -->
-
 <div id="midground"></div>
 
 <!-- Foreground Div : Contains the main html content -->
@@ -39,7 +43,7 @@
 
 	<div id="header">
 
-		<img src="assets/images/matrixbg2.png">
+		<img src="assets/images/matrixbg2.png" id="titleimg">
 	
 	</div>
 
@@ -82,7 +86,17 @@
 					
 					<div class="col-md-12">
 						
-						Wins<br><span id="wins"></span>
+						Wins#<br><span id="wins"></span>
+					
+					</div>
+				
+				</div>
+
+				<div class="row">
+					
+					<div class="col-md-12">
+						
+						Losses#<br><span id="lose"></span>
 					
 					</div>
 				
@@ -125,6 +139,83 @@
 	
 	</div> <!-- Main container div closes -->
 
+  	<!-- Modal dialog display when the user loses -->
+
+  		<div class="modal" role="dialog" id="myModal">
+    		
+    		<div class="modal-dialog">
+    
+      		<!-- Modal content-->
+      			<div class="modal-content" id="winModal" >
+
+        			<div class="modal-header">
+          				
+          				<h4 class="modal-title">You Lose!!</h4>
+        			</div>
+
+        			<div class="modal-body">
+
+						
+						<video id="losevideo" loop="loop">
+							<source src="assets/theme/losemp4.mp4" type="video/mp4">
+						</video> 
+						
+
+        			</div>
+
+        			<div class="modal-footer">
+
+               			<p id="confirm">Do you want to enter the matrix again?</p>
+
+        				<button type="button" class="btn btn-secondary" data-dismiss="modal" id="loseclose" value="true">No</button>
+
+        				<button type="button" class="btn btn-primary" id="loseok" value="false">Yes</button>
+
+      				</div>
+        
+        		</div>
+     
+    		</div>
+		</div>
+	</div>
+
+  	<!-- Modal dialog display when the user wins -->
+
+  	<div class="modal" role="dialog" id="myModal2">
+    		
+    		<div class="modal-dialog">
+    
+      		<!-- Modal content-->
+      			<div class="modal-content" id="loseModal"  >
+        			<div class="modal-header">
+
+          		
+          				<h4 class="modal-title">You must be the chosen one.</h4>
+        			</div>
+        			<div class="modal-body">
+          		
+          				<img src="assets/theme/Neo-flying.gif" id="winimg">
+          				
+        			</div>
+
+        			<div class="modal-footer">
+
+               			<p id="confirm">Do you want to enter the matrix again?</p>
+
+        				<button type="button" class="btn btn-secondary" data-dismiss="modal" id="winclose" value="false">No</button>
+
+        				<button type="button" class="btn btn-primary" id="winok" value="true" >Yes</button>
+
+      				</div>
+        
+        		</div>
+     
+    		</div>
+	</div>
+
+</div>
+      
+     
 	<!-- Include jQuery --> 
 
 	 <script src="https://code.jquery.com/jquery-2.2.3.js" integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4=" crossorigin="anonymous"></script>
@@ -148,26 +239,21 @@
 	<script type="text/javascript">
 	
 	$(document).ready(function(){
-
-		$('#midground').css({backgroundPosition: '0px 0px'});
-		$('#foreground').css({backgroundPosition: '0px 0px'});
+	
 		$('#background').css({backgroundPosition: '0px 0px'});
-
-		$('#midground').animate({
-			backgroundPosition:"(-10000px -2000px)"
-		}, 240000, 'linear');
-
-		$('#foreground').animate({
-			backgroundPosition:"(-10000px -2000px)"
-		}, 120000, 'linear');
-
 		$('#background').animate({
 			backgroundPosition:"(-10000px -2000px)"
 		}, 480000, 'linear');
 
 	});
 
+
+
 	</script>	
+
+	
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
 </html>

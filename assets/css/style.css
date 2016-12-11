@@ -18,6 +18,14 @@ body{
 	top:0;left:0;right: 0;
 
 }
+#confirm{
+	text-align: left;
+}
+
+#titleimg{
+
+	margin-top: -50px;
+}
 
 .prompt{
 
@@ -27,6 +35,7 @@ body{
 	width:800px;
 	text-align: center;
 	margin-left: 300px;
+	margin-top: -30px;
 
 }
 
@@ -46,10 +55,11 @@ body{
 	line-height: 150%;
 	text-align: center;
 	border:5px solid white;
+	display: none;
 
 }
 
-#wins,#loses,
+#wins,#lose,
 #currentword,#guessesleft,
 #letters
 {
@@ -64,6 +74,7 @@ body{
 	height: 400px;
 	width: 500px;
 	border:2px solid white;
+	display:none;
 
 
 }
@@ -74,5 +85,43 @@ body{
 		
 }
 
-/*  Pop up code */
+#winModal,#loseModal
+{
+	height: 550px;
+	width: 500px;
+	background-color: #228B22;
+	color:black;
+	font-size:25px;
+}
+#loseok,#winok
+{
+ 	background-color: red;
+
+}
+
+#loseclose,#winclose
+{
+background-color: blue;
+}
+
+#loseclose,#loseok,
+#winclose,#winok
+{
+	height: 50px;
+	width: 100px;
+	text-align: center;
+	color:black;
+	font-size: 20px;
+}
+
+#loseimg,#winimg{
+	height: 250px;
+	width: 100%;
+}
+
+#losevideo
+{
+	height:250px;
+	width: 100%;
+}
 

@@ -2,26 +2,24 @@
 
 window.onload = function() {
 
-  //document.getElementById("myaudio").play();
+  document.getElementById("myaudio").play();
+  document.getElementById("myaudio1").play();
+
+  setTimeout(showDiv,7550);
 
 }
 
 // wordList Array to select random words from
 
-var wordList = ["DAREDEVIL","POKEMON","GREENHOUSE","HONEYCOMB","PANCAKE"];
-
-/*["LEONARDO DICAPRIO","ITALY",
-"MOUNT RUSHMORE","SNOWBOARDING","QUICKSAND","MOUNTAIN BIKING",
-"GAME OF THRONES","BREAKING BAD","HARRY POTTER","SHERLOCK HOLMES",
-"SHAKESPEAR","COLUMBUS","THOMAS EDISON","ALBERT EINSTEIN","THE BEATLES",
-"THOMAS JEFFERSON","PABLO PICASSO","CALIFORNIA","SWITZERLAND",
-"LUKE SKYWALKER","BEETHOVAN","COLDPLAY","INDIANA JONES","BATMAN",
-"TITANIC","STAR WARS","THE INCREDIBLES","CARDBOARD","CHOPSTICK",
-"DAREDEVIL","POKEMON","GREENHOUSE","HONEYCOMB","PANCAKE","SANDCASTLE",
-"WATERMELON","MICHAEL JORDON","NEIL ARMSTRONG","POCAHONTAS","INCEPTION",
-"FLAMINGO","SWORDFISH","SCORPION","OCTOPUS","LOBSTER","DRAGON",
-"CHAMELEON","CHIPMUNK","GOLDEN RETRIEVER","GREYHOUND","SILKWORM",
-"SNAIL","BARACK OBAMA","SPIDERMAN","DARTH VADER","GEORGE WASHINGTON"];*/
+var wordList = ["SPAIN","ITALY","FRANCE","CANADA","INDIA","JAPAN",
+"GREECE","ICELAND","GERMANY","TOMATO","POTATO","CHOCOLATE","PANCAKE",
+"APPLE","ORANGE","BANANA","CHEESECAKE","STRAWBERRY","TITANIC","INCEPTION",
+"BATMAN","SPIDERMAN","INTERSTELLAR","GLADIATOR","THOR","AVATAR","JAWS",
+"VERTIGO","ALLIGATOR","MONKEY","HORSE","TIGER","DEER","CHAMELEON","CHIPMUNK",
+"DOLPHIN","SALMON","DONKEY","DRAGON","BUTTERFLY","EAGLE","FOX","POKEMON",
+"QUEEN","NIRVANA","METALLICA","COLDPLAY","AEROSMITH","JOURNEY","OASIS",
+"RUSH","EAGLES","SEINFIELD","FRIENDS","ARROW","DAREDEVIL","LOST","SUPERNATURAL",
+"SCRUBS","GLEE","DEXTER","PSYCH"];
 
 var random = Math.floor((Math.random()*(wordList.length-1))); 
 var word = wordList[random]; // the word to guess will be chosen from the array above
@@ -59,11 +57,18 @@ context.clearRect(0, 0, 400, 400);
 
 }
 
+function showDiv(){
+
+  document.getElementById("stickmancol").style.display="block";
+  document.getElementById("game").style.display="block";
+
+}
+
 
 var wins=0; // variable to calculate number of wins
 var loses=0; // variable to calculate number of loses
 var MAX_GUESSES = 10; // Maximum number of guesses available at the start of the game
-
+var prevguessed = []; // array to store all the letters guessed by the user
 // animate function to draw hangman stick figure
 
 var animate = function (){
@@ -77,13 +82,22 @@ var animate = function (){
 document.getElementById("guessesleft").innerHTML= MAX_GUESSES;
 
 document.onkeyup = function(event){
-  
+
+
+document.getElementById("keypress").play();
+
+  //setTimeout(showDiv,7800);
   var flag=false;
 
+  // Proceeds only when user input is an alphabet
 
-  // variable to store letter guessed by the user
+  if(checkInput())
+  {
 
-  var userletter = String.fromCharCode(event.keyCode).toUpperCase();
+    // variable to store letter guessed by the user
+  
+    var userletter = String.fromCharCode(event.keyCode).toUpperCase();
+    prevguessed.push(userletter); // array stores all the alphabets user enters
 
   // Loop to check if the letter guessed by the user matches the letter in the current word
 
@@ -105,8 +119,16 @@ document.onkeyup = function(event){
   { 
     var letters = document.getElementById("letters");
     var newword = document.createTextNode(" " + userletter);
-    letters.appendChild(newword);
-    MAX_GUESSES=MAX_GUESSES-1;  // Maximum guesses decreased by 1 for every wrong guess
+    
+    // appends only if user hasen't already guessed the letter
+
+    if(((prevguessed.toString()).split(userletter).length - 1) === 1)
+      {
+        letters.appendChild(newword);
+        MAX_GUESSES=MAX_GUESSES-1;
+      }
+    
+    // Maximum guesses decreased by 1 for every wrong guess
     document.getElementById("guessesleft").innerHTML=MAX_GUESSES;
     canvas();
     animate(); // draw stick figure for every wrong guess
@@ -126,14 +148,31 @@ document.onkeyup = function(event){
 
   /*  if the user guessed the correct word ,wins count is increased by 
       1 and result is displayed on html page.Also the flag is set to true */
-
   if(allwords)
-  {
-      
+  {   
+      document.getElementById("myaudio").pause();
+      $("#myModal2").modal('show');
       wins=wins+1;
-      document.getElementById("wins").innerHTML=wins;
-      flag=true;
-      alert("You win");
+      document.getElementById("winaudio").play();
+      document.getElementById("wins").innerHTML=wins; 
+      document.getElementById("currentword").innerHTML=word;
+      $("#winok").on("click",function(){ 
+
+        $("#myModal2").modal('hide');
+        gameover();
+        document.getElementById("winaudio").pause();
+
+
+      });
+      $("#winclose").on("click",function(){ 
+
+        gameover();
+       document.getElementById("winaudio").pause();
+
+
+      });
+
+
   }
 
   /* if the user cannot guess the correct word,lose count increases by 1 
@@ -141,36 +180,71 @@ document.onkeyup = function(event){
 
   if(MAX_GUESSES === 0)
   {
-      alert("Oops!!Looks like you ran out of guesses");
-      loses=loses+1; 
-      flag=true;
 
-  }
+      document.getElementById("myaudio").pause();
+      $("#myModal").modal('show');
+      loses=loses+1;
+      document.getElementById("losevideo").play();
+      document.getElementById("lose").innerHTML=loses;
+      document.getElementById("currentword").innerHTML=word;
+      $("#loseok").on("click",function(){ 
+
+            $("#myModal").modal('hide');
+            gameover();
+            document.getElementById("losevideo").pause();
+
+
+      });
+      $("#loseclose").on("click",function(){ 
+
+            gameover();
+            document.getElementById("losevideo").pause();
+
+
+      });
+
+
+  }              
 
   /* if the flag is true that means the game is over and new word is
      selected from the wordList and everything is reset */
-
-
-  if(flag)
-    {
-       var play = confirm("Do you want to play again?");
-        if(play)
-        {
+  
+    function gameover()
+     {
           random = Math.floor((Math.random()*(wordList.length-1))); 
-          word = wordList[random]; // the word to guess will be chosen from the array above
+          word = wordList[random]; 
           currentword = new Array(word.length);
-          MAX_GUESSES =10;
-          for (var i = 0; i < currentword.length; i++){
+          MAX_GUESSES = 10;
+          for (var i = 0; i < currentword.length; i++)
+          {
             currentword[i] =  "_ ";
           }
+          prevguessed=[];
           document.getElementById("currentword").innerHTML="";
           guessWord();
           document.getElementById("letters").innerHTML="";
           document.getElementById("guessesleft").innerHTML=MAX_GUESSES;
           resetFigure();
-        }
+      }
     }
   }
+
+  // Function to check if the user entered alphabets only
+
+  var checkInput = function ()
+  {
+    var alphabets = /^[a-zA-Z]+$/;
+    if((String.fromCharCode(event.keyCode)).match(alphabets))
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }
+  
 
   // Hangman - functions to animate stickman figure on the canvas
 
@@ -239,7 +313,6 @@ document.onkeyup = function(event){
   
   drawArray = [rightLeg, leftLeg, rightArm, leftArm,  torso,  head, frame4, frame3, frame2, frame1]; 
     
-// Pop up js
 
 
 
